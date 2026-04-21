@@ -650,7 +650,7 @@
         </p>
     </div>
     
-    <div class="media-box" onclick="openLightbox('youtube', 'CAeZQ4vZDAk')">
+    <div class="media-box" onclick="showMedia('youtube', 'CAeZQ4vZDAk')">
     <iframe 
         width="100%" 
         height="100%" 
@@ -667,7 +667,7 @@
 </div>
         
     
-    <div class="media-box" onclick="openLightbox('video', 'received_1149773240067994.mp4','12152002')">
+    <div class="media-box" onclick="showMedia('video', 'received_1149773240067994.mp4','12152002')">
         <video>
             <source src="received_1149773240067994.mp4" type="video/mp4">
         </video>
@@ -780,42 +780,67 @@ function submitPassword() {
         setTimeout(() => box.style.animation = "", 300);
     }
 }
-function openLightbox(type, src) {
-    if (type === 'youtube') {
-        // src would be 'CAeZQ4vZDAk'
-        var content = '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' + src + '?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-    } else if (type === 'video') {
-        // src would be 'filename.mp4'
-        var content = '<video controls src="' + src + '"></video>';
-    }
-    // Display content in your lightbox
-}
 function showMedia(type, src) {
     const lightbox = document.getElementById('lightbox');
     const img = document.getElementById('lightbox-img');
     const video = document.getElementById('lightbox-video');
-
-    if(type === 'image') {
+    const iframeContainer = document.getElementById('lightbox-iframe-container');
+    
+    // Hide all elements first
+    img.style.display = 'none';
+    video.style.display = 'none';
+    video.pause();
+    
+    if (iframeContainer) {
+        iframeContainer.style.display = 'none';
+        // Clear previous iframe
+        iframeContainer.innerHTML = '';
+    }
+    
+    if (type === 'image') {
         img.src = src;
         img.style.display = 'block';
-        video.style.display = 'none';
-        video.pause();
-    } else {
+    } 
+    else if (type === 'video') {
         video.src = src;
         video.style.display = 'block';
-        img.style.display = 'none';
-
+        
         // RESET rotation first
         video.classList.remove("rotate-video");
-
+        
         // APPLY rotation ONLY to specific video
         if (src === "vid1.mp4") {
             video.classList.add("rotate-video");
         }
-
+        
         video.play();
     }
-
+    else if (type === 'youtube') {
+        // Create or get iframe container
+        let container = iframeContainer;
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'lightbox-iframe-container';
+            lightbox.appendChild(container);
+        }
+        
+        container.style.display = 'block';
+        container.style.width = '90%';
+        container.style.height = '80%';
+        
+        // Create and add iframe
+        const iframe = document.createElement('iframe');
+        iframe.width = '100%';
+        iframe.height = '100%';
+        iframe.src = 'https://www.youtube.com/embed/' + src + '?autoplay=1';
+        iframe.frameBorder = '0';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        
+        container.innerHTML = '';
+        container.appendChild(iframe);
+    }
+    
     lightbox.style.display = 'flex';
 }
 
