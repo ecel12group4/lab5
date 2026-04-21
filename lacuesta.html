@@ -650,14 +650,23 @@
         </p>
     </div>
     
-    <div class="media-box" onclick="openLightbox('video', 'received_1385922039453566.mp4','12152002')">
-        <video>
-            <source src="received_1385922039453566.mp4" type="video/mp4">
-        </video>
-        <p>
+    <div class="media-box" onclick="openLightbox('youtube', 'CAeZQ4vZDAk')">
+    <iframe 
+        width="100%" 
+        height="100%" 
+        src="https://www.youtube.com/embed/CAeZQ4vZDAk" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin" 
+        allowfullscreen>
+    </iframe>
+       <p>
             The Dance Floor is Now Open
         </p>
-    </div>
+</div>
+        
+    
     <div class="media-box" onclick="openLightbox('video', 'received_1149773240067994.mp4','12152002')">
         <video>
             <source src="received_1149773240067994.mp4" type="video/mp4">
@@ -771,7 +780,16 @@ function submitPassword() {
         setTimeout(() => box.style.animation = "", 300);
     }
 }
-
+function openLightbox(type, src) {
+    if (type === 'youtube') {
+        // src would be 'CAeZQ4vZDAk'
+        var content = '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' + src + '?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    } else if (type === 'video') {
+        // src would be 'filename.mp4'
+        var content = '<video controls src="' + src + '"></video>';
+    }
+    // Display content in your lightbox
+}
 function showMedia(type, src) {
     const lightbox = document.getElementById('lightbox');
     const img = document.getElementById('lightbox-img');
