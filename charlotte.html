@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Charlotte Marie Genogaling</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* BODY */
+
+body{
+margin:0;
+font-family:Segoe UI, sans-serif;
+background:linear-gradient(135deg,#ffe4ec,#f1f8ff);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+overflow:hidden;
+position:relative;
+}
+
+/* BACKGROUND BLOBS */
+
+body::before,
+body::after{
+content:"";
+position:absolute;
+border-radius:50%;
+z-index:0;
+filter:blur(80px);
+opacity:0.6;
+animation:float 8s infinite ease-in-out;
+}
+
+body::before{
+width:300px;
+height:300px;
+background:#ffb3c6;
+top:-80px;
+left:-80px;
+}
+
+body::after{
+width:350px;
+height:350px;
+background:#a0c4ff;
+bottom:-100px;
+right:-100px;
+animation-delay:3s;
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0px);}
+50%{transform:translateY(30px);}
+}
+
+/* SPARKLES */
+
+.sparkle{
+position:absolute;
+width:6px;
+height:6px;
+background:white;
+border-radius:50%;
+opacity:0.8;
+animation:twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle{
+0%,100%{opacity:0.2;}
+50%{opacity:1;}
+}
+
+/* GLASS CARD */
+
+.container{
+position:relative;
+z-index:1;
+padding:35px;
+border-radius:20px;
+text-align:center;
+max-width:360px;
+
+background:rgba(255,255,255,0.25);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.3);
+
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+animation:fadeIn 1s;
+}
+
+/* PROFILE */
+
+.profile-pic{
+width:140px;
+height:140px;
+border-radius:50%;
+object-fit:cover;
+border:4px solid rgba(255,255,255,0.5);
+transition:.3s;
+}
+
+.profile-pic:hover{
+transform:scale(1.05);
+}
+
+h1{
+margin:10px 0;
+font-size:22px;
+}
+
+.tag{
+background:rgba(255,255,255,0.4);
+padding:6px 14px;
+border-radius:20px;
+font-size:12px;
+display:inline-block;
+margin-top:8px;
+}
+
+/* ICONS */
+
+.socials{
+margin-top:20px;
+display:flex;
+justify-content:center;
+gap:25px;
+}
+
+.icon-box{
+text-align:center;
+cursor:pointer;
+color:#555;
+transition:.3s;
+}
+
+.icon-box i{
+font-size:22px;
+}
+
+.icon-box p{
+font-size:12px;
+margin-top:5px;
+}
+
+.icon-box:hover{
+color:#ff8fab;
+transform:translateY(-3px);
+}
+
+/* SECTIONS */
+
+.section{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(255,255,255,0.6);
+backdrop-filter:blur(10px);
+overflow:auto;
+padding:40px;
+animation:fadeIn .5s;
+z-index:2;
+}
+
+.section-content{
+max-width:900px;
+margin:auto;
+}
+
+.close{
+font-size:20px;
+cursor:pointer;
+float:right;
+color:#888;
+}
+
+/* ABOUT */
+
+.about-container{
+display:flex;
+gap:25px;
+flex-wrap:wrap;
+align-items:center;
+}
+
+.about-img{
+width:180px;
+border-radius:15px;
+}
+
+/* PROJECTS */
+
+.project-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+margin-top:20px;
+}
+
+.project-card{
+background:rgba(255,255,255,0.4);
+backdrop-filter:blur(10px);
+padding:15px;
+border-radius:15px;
+cursor:pointer;
+transition:.3s;
+}
+
+.project-card:hover{
+transform:translateY(-5px);
+}
+
+.project-image{
+width:100%;
+max-width:500px;
+border-radius:15px;
+margin-top:20px;
+}
+
+/* BUTTON */
+
+.back-btn{
+margin-top:10px;
+padding:8px 15px;
+border:none;
+border-radius:15px;
+background:#ff8fab;
+color:white;
+cursor:pointer;
+}
+
+.back-btn:hover{
+background:#ff6f91;
+}
+
+/* LINKS */
+
+a{
+text-decoration:none;
+color:#555;
+}
+
+a:hover{
+color:#ff8fab;
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SPARKLES -->
+<div class="sparkle" style="top:20%; left:30%;"></div>
+<div class="sparkle" style="top:70%; left:20%;"></div>
+<div class="sparkle" style="top:40%; left:80%;"></div>
+<div class="sparkle" style="top:60%; left:60%;"></div>
+
+<!-- FRONT PAGE -->
+<div class="container" id="home">
+
+<img src="Screenshot_20260406-095755.png" class="profile-pic">
+
+<h1>CHARLOTTE MARIE GENOGALING</h1>
+
+<p>Passionate student who loves technology and building creative projects.</p>
+
+<div class="tag">✨ Dreamer • Creator • Learner</div>
+
+<div class="socials">
+
+<div class="icon-box" onclick="openSection('about')">
+<i class="fas fa-user"></i>
+<p>About</p>
+</div>
+
+<div class="icon-box" onclick="openSection('projects')">
+<i class="fas fa-laptop-code"></i>
+<p>Projects</p>
+</div>
+
+<div class="icon-box" onclick="openSection('contact')">
+<i class="fas fa-envelope"></i>
+<p>Contact</p>
+</div>
+
+</div>
+
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="section">
+<div class="section-content">
+<span class="close" onclick="closeSection()">✖</span>
+
+<h2>About Me</h2>
+
+<div class="about-container">
+<img src="Screenshot_20260406-095755.png" class="about-img">
+<p>Hello! I'm Charlotte Marie Genogaling.  
+I am passionate about technology, electronics, and creative design.
+I enjoy working on projects involving coding, hardware systems, and innovation.</p>
+</div>
+
+</div>
+</div>
+
+<!-- PROJECTS -->
+<div id="projects" class="section">
+<div class="section-content">
+<span class="close" onclick="closeSection()">✖</span>
+
+<h2>Projects(click boxes to view photo)</h2>
+
+<div class="project-grid">
+
+<div class="project-card" onclick="openProject('ir')">
+<h3>IR Remote Car</h3>
+<p>Vehicle controlled using IR remote with RGB LED effects.</p>
+</div>
+
+<div class="project-card" onclick="openProject('transmission')">
+<h3>Transmission Line Lab</h3>
+<p>Antenna application of transmission</p>
+</div>
+
+<div class="project-card" onclick="openProject('logic')">
+<h3>Digital Logic Design</h3>
+<p>Flip-flop and latch circuit implementations.</p>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- PROJECT VIEW -->
+<div id="project-view" class="section">
+<div class="section-content">
+<span class="close" onclick="closeSection()">✖</span>
+
+<button class="back-btn" onclick="goBack()">⬅ Back</button>
+
+<h2 id="project-title"></h2>
+<img id="project-image" class="project-image">
+
+</div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="section">
+<div class="section-content">
+<span class="close" onclick="closeSection()">✖</span>
+
+<h2>Contact</h2>
+
+<p>
+<a href="https://www.facebook.com/search/top?q=charlotte%20marie%20genogaling" target="_blank">
+<i class="fab fa-facebook"></i> Charlotte Marie Genogaling
+</a>
+<br><br>
+
+<a href="https://www.instagram.com/charrrrrrrrrr_lottteeeee/" target="_blank">
+<i class="fab fa-instagram"></i> @charrrrrrrrrr_lottteeeee
+</a>
+</p>
+
+</div>
+</div>
+
+<script>
+
+function openSection(id){
+document.getElementById("home").style.display="none";
+document.getElementById(id).style.display="block";
+}
+
+function closeSection(){
+document.querySelectorAll('.section').forEach(s=>s.style.display="none");
+document.getElementById("home").style.display="block";
+}
+
+function goBack(){
+document.getElementById("project-view").style.display="none";
+document.getElementById("projects").style.display="block";
+}
+
+function openProject(type){
+let title=document.getElementById("project-title");
+let img=document.getElementById("project-image");
+
+if(type==="ir"){
+title.innerText="IR Remote Car";
+img.src="PROJECT 3.jpg";
+}
+if(type==="transmission"){
+title.innerText="Transmission Line Lab";
+img.src="PROJECT 4.jpg";
+}
+if(type==="logic"){
+title.innerText="Digital Logic Design";
+img.src="PROJECT 5.jpg";
+}
+
+openSection("project-view");
+}
+
+</script>
+
+</body>
+</html>

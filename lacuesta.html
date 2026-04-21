@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karl Denmark Lacuesta</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background: linear-gradient(135deg, #667eea, #764ba2, #ff758c); background-size: 300% 300%; animation: gradientMove 10s infinite alternate; min-height: 100vh; color: white; }
+    @keyframes gradientMove { 0% { background-position: left; } 100% { background-position: right; } }
+    header { text-align: center; padding: 30px; backdrop-filter: blur(10px); }
+    header h1 { font-size: 3rem; }
+    .tabs { display: flex; justify-content: center; gap: 20px; margin: 20px; }
+    .tab { padding: 15px 30px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; transition: 0.4s; color: white; }
+    .images-tab { background: linear-gradient(45deg, #00c6ff, #0072ff); }
+    .videos-tab { background: linear-gradient(45deg, #ff512f, #dd2476); }
+    .tab:hover { transform: scale(1.1); box-shadow: 0 0 20px rgba(255,255,255,0.6); }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; padding: 30px; }
+    .media-box { position: relative; overflow: hidden; border-radius: 20px; cursor: pointer; text-align: center; }
+    .media-box img, .media-box video { width: 100%; border-radius: 20px; transition: transform 0.5s ease; }
+    .media-box::after { content: "View"; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; opacity: 0; transition: 0.4s; }
+    .media-box:hover::after { opacity: 1; }
+    .media-box:hover img, .media-box:hover video { transform: scale(1.1); }
+    .content-section { display: none; }
+    .active { display: grid; }
+    footer { text-align: center; padding: 20px; margin-top: 30px; backdrop-filter: blur(10px); }
+
+    /* Lightbox Styles */
+    #lightbox {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.9);
+        align-items: center; justify-content: center;
+        z-index: 9999;
+        flex-direction: column;
+    }
+    #lightbox img, #lightbox video { max-width: 90%; max-height: 90%; border-radius: 10px; }
+    #lightbox span { position: absolute; top: 20px; right: 30px; font-size: 2rem; color: white; cursor: pointer; }
+
+    /* Homepage Design */
+.home-container {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 50px 20px;
+    animation: fadeIn 1.5s ease;
+}
+
+.home-title {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    background: linear-gradient(45deg, #fff, #00f7ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.home-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 30px;
+}
+
+.home-btn {
+    display: inline-block;
+    padding: 15px 35px;
+    margin: 10px;
+    border-radius: 50px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    transition: 0.4s;
+}
+
+.btn-images {
+    background: linear-gradient(45deg, #00c6ff, #0072ff);
+}
+
+.btn-videos {
+    background: linear-gradient(45deg, #ff512f, #dd2476);
+}
+
+.home-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255,255,255,0.7);
+}
+
+.home-avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    border: 4px solid rgba(255,255,255,0.6);
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    object-fit: cover;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Floating particles */
+.particles {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.particles span {
+    position: absolute;
+    display: block;
+    width: 10px;
+    height: 10px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(100vh) scale(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-10vh) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Glass effect card */
+.home-container {
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 40px rgba(0,0,0,0.3);
+}
+
+/* Glow text animation */
+.home-title {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #fff; }
+    to { text-shadow: 0 0 25px #00f7ff, 0 0 40px #00f7ff; }
+}
+
+/* Avatar hover effect */
+.home-avatar:hover {
+    transform: scale(1.1) rotate(5deg);
+    transition: 0.4s;
+}
+
+/* Button pulse */
+.home-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.home-btn::before {
+    content: "";
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    background: rgba(255,255,255,0.2);
+    top: -100%;
+    left: -100%;
+    transform: rotate(45deg);
+    transition: 0.5s;
+}
+
+.home-btn:hover::before {
+    top: 0;
+    left: 0;
+}
+/* Tab Navigation Buttons */
+.tab-nav {
+    grid-column: 1 / -1;   /* makes it span entire row */
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.tab-nav button {
+    padding: 10px 25px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    transition: 0.4s;
+}
+
+.tab-nav .btn-home { background: linear-gradient(45deg, #00ffcc, #0099ff); }
+.tab-nav .btn-images { background: linear-gradient(45deg, #00c6ff, #0072ff); }
+.tab-nav .btn-videos { background: linear-gradient(45deg, #ff512f, #dd2476); }
+
+.tab-nav button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255,255,255,0.6);
+}
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 5px;
+}
+
+.social-icons a {
+    font-size: 18px;
+    color: white;
+    transition: 0.3s;
+}
+
+/* TikTok */
+.social-icons a:hover .fa-tiktok {
+    color: #0e0e0e;
+}
+
+/* Instagram */
+.social-icons a:hover .fa-instagram {
+    color: #ff00aa;
+}
+
+.social-icons a:hover {
+    transform: scale(1.2);
+}
+#password-box {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    animation: fadeIn 0.4s ease;
+}
+
+.password-card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    padding: 35px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    width: 300px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    animation: zoomIn 0.4s ease;
+}
+
+.password-card h3 {
+    margin-bottom: 10px;
+}
+
+.password-card input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    margin-top: 10px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.password-card input:focus {
+    box-shadow: 0 0 10px #00f7ff;
+}
+
+/* Buttons */
+.password-card button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* Enter button */
+.btn-enter {
+    background: linear-gradient(45deg, #00c6ff, #0072ff);
+    color: white;
+}
+
+.btn-enter:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #00c6ff;
+}
+
+/* Cancel button */
+.btn-cancel {
+    background: linear-gradient(45deg, #ff512f, #dd2476);
+    color: white;
+    margin-left: 10px;
+}
+
+.btn-cancel:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #ff512f;
+}
+
+/* Error text */
+#pw-error {
+    color: #ffcc00;
+    margin-top: 10px;
+}
+
+/* Animations */
+@keyframes zoomIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.shake {
+    animation: shake 0.3s;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+/* Glow border */
+.password-card {
+    position: relative;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    padding: 35px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    width: 300px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    animation: zoomIn 0.4s ease;
+    overflow: hidden;
+}
+
+.password-card::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 20px;
+    background: linear-gradient(45deg, #00f7ff, #ff00aa, #00ffcc);
+    z-index: -1;
+    animation: borderGlow 4s linear infinite;
+}
+
+@keyframes borderGlow {
+    0% { filter: blur(5px); opacity: 0.7; }
+    50% { filter: blur(15px); opacity: 1; }
+    100% { filter: blur(5px); opacity: 0.7; }
+}
+
+/* Lock icon */
+.lock-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Input with icon */
+.input-group {
+    position: relative;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    text-align: center;
+}
+
+.input-group i {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    cursor: pointer;
+}
+
+/* Buttons */
+.btn-enter {
+    background: linear-gradient(45deg, #00c6ff, #0072ff);
+    color: white;
+    margin-top: 10px;
+}
+
+.btn-cancel {
+    background: linear-gradient(45deg, #ff512f, #dd2476);
+    color: white;
+    margin-left: 10px;
+}
+
+/* Mini particles inside card */
+.mini-particles span {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+    animation: floatMini 6s linear infinite;
+}
+
+@keyframes floatMini {
+    from { transform: translateY(100px); opacity: 1; }
+    to { transform: translateY(-50px); opacity: 0; }
+}
+
+/* Shake */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+#lightbox video {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+</style>
+</head>
+
+<body>
+
+
+    
+    <div class="particles">
+    <span style="left:10%; animation-duration:6s;"></span>
+    <span style="left:20%; animation-duration:8s;"></span>
+    <span style="left:30%; animation-duration:5s;"></span>
+    <span style="left:40%; animation-duration:7s;"></span>
+    <span style="left:50%; animation-duration:6s;"></span>
+    <span style="left:60%; animation-duration:9s;"></span>
+    <span style="left:70%; animation-duration:5s;"></span>
+    <span style="left:80%; animation-duration:8s;"></span>
+    <span style="left:90%; animation-duration:6s;"></span>
+</div>
+
+<header>
+    <h1>KARL DENMARK LACUESTA</h1>
+    <p>Images & Videos Collection</p>
+</header>
+<section id="home" class="gallery content-section active">
+    <div class="home-container">
+
+        <!-- PROFILE IMAGE -->
+        <img src="1775441268317.jpeg" class="home-avatar">
+
+        <!-- TITLE -->
+        <h2 class="home-title">Welcome 👋</h2>
+
+        <!-- SUBTEXT -->
+        <p class="home-subtitle">
+            This is my personal gallery of memories, moments, and experiences.
+        </p>
+<p id="typing-text" style="margin-top:15px; font-style: italic;"></p>
+        <!-- BUTTONS -->
+        <a href="#images" class="home-btn btn-images" onclick="showSection('images')">View Images</a>
+        <a href="#videos" class="home-btn btn-videos" onclick="showSection('videos')">Watch Videos</a>
+
+    </div>
+</section>
+<!-- Images -->
+ <!-- Tab Navigation in Images Section -->
+
+<section id="images" class="gallery content-section">
+    <!-- Tab Navigation inside Images Section -->
+<div class="tab-nav">
+    <button class="btn-home" onclick="showSection('home')">Home</button>
+    <button class="btn-images" onclick="showSection('images')">Images</button>
+    <button class="btn-videos" onclick="showSection('videos')">Videos</button>
+</div>
+    <div class="media-box" onclick="openLightbox('image', 'received_138715813741308.jpeg')">
+        <img src="received_138715813741308.jpeg">
+        
+        <p>Grade 10 hiphop</p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', 'received_280249362642044.jpeg')">
+        <img src="received_280249362642044.jpeg">
+         <p>Grade 10 hiphop</p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '1 (1).jpeg','12152002')">
+        <img src="1 (1).jpeg">
+         <p>TentaTWOunds Reuion</p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '1 (1).webp')">
+        <img src="1 (1).webp">
+         <p>Grade 10 Awarding</p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '1 (2).jpeg','12152002')">
+        <img src="1 (2).jpeg">
+         <p>TentaTWOunds Reuion</p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '1 (5).jpeg')">
+        <img src="1 (5).jpeg">
+         <p>Kunwari gatuon sa library</p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '1 (6).jpeg')">
+        <img src="1 (6).jpeg">
+         <p>Last Class sa Student Teacher 10-2</p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '1 (7).jpeg')">
+        <img src="1 (7).jpeg">
+         <p>Luhh</p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '1 (11).jpeg')">
+        <img src="1 (11).jpeg">
+         <p>TentaTWOunds Outing with Ma'am Tatud</p>
+    </div>
+     <div class="media-box" onclick="openLightbox('image', '316808897_645600140636036_2929686677983232425_n.jpeg')">
+        <img src="316808897_645600140636036_2929686677983232425_n.jpeg">
+         <p>ECE 2A </p>
+    </div>
+        <div class="media-box" onclick="openLightbox('image', '1736166958324.jpg')">
+        <img src="1736166958324.jpg">
+         <p>8-1 CHS-Computer assembly and disassembly</p>
+    </div>
+     <div class="media-box" onclick="openLightbox('image', 'FB_IMG_1736167369500.jpg','12152002')">
+        <img src="FB_IMG_1736167369500.jpg">
+         <p>5 man pungulay?</p>
+    </div>
+     <div class="media-box" onclick="openLightbox('image', 'FB_IMG_1736167379086.jpg')">
+        <img src="FB_IMG_1736167379086.jpg">
+         <p>Grade 9 section 2 & 3 picturial with Sir He</p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', 'FB_IMG_1736167366476.jpg')">
+        <img src="FB_IMG_1736167366476.jpg">
+         <p>Grade 9 section 2 & 3 picturial with Sir He</p>
+    </div>
+<div class="media-box" onclick="openLightbox('image', '51794228_396329581113766_1030038749351772160_n.jpg','12152002')">
+        <img src="51794228_396329581113766_1030038749351772160_n.jpg">
+         <p>picture namon ni Joefhanie </p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '1 (3).jpeg')">
+        <img src="1 (3).jpeg">
+         <p>eyyy</p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '2 (1).jpeg')">
+        <img src="2 (1).jpeg">
+         <p>9-2 Convocation Program</p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '2 (2).jpeg')">
+        <img src="2 (2).jpeg">
+         <p>10-2 Cheerdance</p>
+    </div>
+     <div class="media-box" onclick="openLightbox('image', '2 (5).jpeg')">
+        <img src="2 (5).jpeg">
+         <p>10-2 Junior High Graduation</p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '3 (1).jpg')">
+        <img src="3 (1).jpg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '3 (2).jpg')">
+        <img src="3 (2).jpg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '3 (3).jpg')">
+        <img src="3 (3).jpg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '3 (4).jpg')">
+        <img src="3 (4).jpg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '2 (3).jpg')">
+        <img src="2 (3).jpg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '2 (2).jpg')">
+        <img src="2 (2).jpg">
+         <p>gwapo gwapo ba</p>
+    </div>
+
+</section>
+
+<!-- Videos -->
+ <!-- Tab Navigation in Videos Section -->
+
+<section id="videos" class="gallery content-section">
+    <div class="tab-nav">
+    <button class="btn-home" onclick="showSection('home')">Home</button>
+    <button class="btn-images" onclick="showSection('images')">Images</button>
+    <button class="btn-videos" onclick="showSection('videos')">Videos</button>
+</div>
+    <div class="media-box" onclick="openLightbox('video', 'vid1.mp4')">
+        <video>
+            <source src="vid1.mp4" type="video/mp4">
+        </video>
+        <p>
+            sin o tana na, wala ko kakilala
+        </p>
+    </div>
+    <div class="media-box" onclick="openLightbox('video', 'VID_20260314_230340.mp4')">
+        <video>
+            <source src="VID_20260314_230340.mp4" type="video/mp4">
+        </video>
+        <p>
+            Nong Boyboy walking dead dance
+        </p>
+    </div>
+    <div class="media-box" onclick="openLightbox('video', 'Messenger_creation_ABCD5E56-E22A-4200-AB49-015149332B68.mp4')">
+        <video>
+            <source src="Messenger_creation_ABCD5E56-E22A-4200-AB49-015149332B68.mp4" type="video/mp4">
+        </video>
+        <p>
+            Tawag ng Kichenette Duet
+        </p>
+    </div>
+    <div class="media-box" onclick="openLightbox('video', 'Messenger_creation_F53E4DA1-4546-4C6B-B63A-450FB13FE721.mp4')">
+        <video>
+            <source src="Messenger_creation_F53E4DA1-4546-4C6B-B63A-450FB13FE721.mp4" type="video/mp4">
+        </video>
+        <p>
+            Quando, Quando, Quando Jammyboy Version
+        </p>
+    </div>
+    <div class="media-box" onclick="openLightbox('video', 'received_1340455370424675.mp4','12152002')">
+        <video>
+            <source src="received_1340455370424675.mp4" type="video/mp4">
+        </video>
+        <p>
+            Classmate pleasa stand.. Are you ready to pray?
+        </p>
+    </div>
+    
+    <div class="media-box" onclick="openLightbox('video', 'received_1385922039453566.mp4','12152002')">
+        <video>
+            <source src="received_1385922039453566.mp4" type="video/mp4">
+        </video>
+        <p>
+            The Dance Floor is Now Open
+        </p>
+    </div>
+    <div class="media-box" onclick="openLightbox('video', 'received_1149773240067994.mp4','12152002')">
+        <video>
+            <source src="received_1149773240067994.mp4" type="video/mp4">
+        </video>
+       <p>
+        maka diyos pero medyo badboy 
+       </p> 
+    </div>
+    <div class="media-box" onclick="openLightbox('video', 'received_4079330965720108.mp4','12152002')">
+        <video>
+            <source src="received_4079330965720108.mp4" type="video/mp4">
+        </video>
+        <p> 
+            Igo pa, kinse edad na, kinse kilo na
+        </p>
+    </div>
+    <div class="media-box" onclick="openLightbox('video', 'vid2.mp4',)">
+        <video>
+            <source src="vid2.mp4" type="video/mp4">
+        </video>
+        <p> 
+            Ocean Star Disco Mobile (Dumangas) vs GM Disco Moblie (Lambunao) Round the Clock Battle
+        </p>
+    </div>
+</section>
+
+<footer>
+    <p>
+        <div class="social-icons">
+    <a href="https://www.instagram.com/biboyyyy.yy/" target="_blank" class="tt-icon">
+        <i class="fab fa-instagram"></i> @biboyyyy.yy
+    </a>
+    <a href="https://www.tiktok.com/@bbooooyyy?_r=1&_t=ZS-95KuP4adQn6" target="_blank">
+        <i class="fab fa-tiktok"></i> @Bbooooyyy
+    </a>
+</div>
+    </p>
+</footer>
+
+<!-- Lightbox -->
+<div id="lightbox">
+    <span onclick="closeLightbox()">×</span>
+    <img id="lightbox-img">
+    <video id="lightbox-video" controls></video>
+</div>
+<!-- PASSWORD POPUP -->
+<div id="password-box">
+    <div class="password-card">
+
+        <div class="lock-icon">
+            <i class="fas fa-lock"></i>
+        </div>
+
+        <h3>Enter Password to View</h3>
+
+        <div class="input-group">
+            <input type="password" id="custom-password" placeholder="Enter password">
+            <i class="fas fa-eye" id="togglePassword"></i>
+        </div>
+
+        <button class="btn-enter" onclick="submitPassword()">Unlock</button>
+        <button class="btn-cancel" onclick="closePasswordBox()">Cancel</button>
+
+        <p id="pw-error"></p>
+
+        <div class="mini-particles"></div>
+
+    </div>
+</div>
+<script>
+    function closePasswordBox() {
+    document.getElementById("password-box").style.display = "none";
+    document.getElementById("custom-password").value = "";
+    document.getElementById("pw-error").innerText = "";
+    currentPassword = null;
+    currentMedia = {};
+}
+function showSection(id) {
+    document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+let currentMedia = {};
+let currentPassword = null;
+
+function openLightbox(type, src, password = null) {
+
+    if (password !== null) {
+        currentMedia = { type, src };
+        currentPassword = password;
+
+        document.getElementById("password-box").style.display = "flex";
+        return;
+    }
+
+    showMedia(type, src);
+}
+function submitPassword() {
+    const input = document.getElementById("custom-password").value;
+    const box = document.querySelector(".password-card");
+
+    if (input === currentPassword) {
+        document.getElementById("password-box").style.display = "none";
+        document.getElementById("custom-password").value = "";
+        document.getElementById("pw-error").innerText = "";
+
+        showMedia(currentMedia.type, currentMedia.src);
+    } else {
+        document.getElementById("pw-error").innerText = "Wrong password!";
+        box.style.animation = "shake 0.3s";
+        setTimeout(() => box.style.animation = "", 300);
+    }
+}
+
+function showMedia(type, src) {
+    const lightbox = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    const video = document.getElementById('lightbox-video');
+
+    if(type === 'image') {
+        img.src = src;
+        img.style.display = 'block';
+        video.style.display = 'none';
+        video.pause();
+    } else {
+        video.src = src;
+        video.style.display = 'block';
+        img.style.display = 'none';
+
+        // RESET rotation first
+        video.classList.remove("rotate-video");
+
+        // APPLY rotation ONLY to specific video
+        if (src === "vid1.mp4") {
+            video.classList.add("rotate-video");
+        }
+
+        video.play();
+    }
+
+    lightbox.style.display = 'flex';
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    const video = document.getElementById('lightbox-video');
+    video.pause();
+    lightbox.style.display = 'none';
+}
+
+const text = "Captured moments. Real memories. Forever yours.";
+let i = 0;
+
+function typeEffect() {
+    if (i < text.length) {
+        document.getElementById("typing-text").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeEffect, 40);
+    }
+}
+
+window.onload = typeEffect;
+
+// Show/Hide password
+document.getElementById("togglePassword").onclick = function () {
+    const input = document.getElementById("custom-password");
+    if (input.type === "password") {
+        input.type = "text";
+        this.classList.remove("fa-eye");
+        this.classList.add("fa-eye-slash");
+    } else {
+        input.type = "password";
+        this.classList.remove("fa-eye-slash");
+        this.classList.add("fa-eye");
+    }
+};
+
+// Press ENTER to submit
+document.getElementById("custom-password").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+        submitPassword();
+    }
+});
+
+// Add mini particles
+const mini = document.querySelector(".mini-particles");
+for (let i = 0; i < 15; i++) {
+    let span = document.createElement("span");
+    span.style.left = Math.random() * 100 + "%";
+    span.style.animationDuration = (3 + Math.random() * 3) + "s";
+    mini.appendChild(span);
+}
+</script>
+
+
+</body>
+</html>

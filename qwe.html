@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang=”en”>
+<head>
+    <meta charset=”UTF-8”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1.0”>
+    <title>Protected Webpage</title>
+    <style>
+        Body {
+            Font-family: ‘Segoe UI’, Tahoma, Geneva, Verdana, sans-serif;
+            Display: flex;
+            Justify-content: center;
+            Align-items: center;
+            Height: 100vh;
+            Background-color: #f0f2f5;
+            Margin: 0;
+        }
+
+        /* Login Container */
+        #login-container {
+            Background: white;
+            Padding: 2rem;
+            Border-radius: 8px;
+            Box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            Width: 300px;
+            Text-align: center;
+        }
+
+        Input {
+            Width: 100%;
+            Padding: 10px;
+            Margin: 10px 0;
+            Border: 1px solid #ddd;
+            Border-radius: 4px;
+            Box-sizing: border-box;
+        }
+
+        Button {
+            Width: 100%;
+            Padding: 10px;
+            Background-color: #007bff;
+            Color: white;
+            Border: none;
+            Border-radius: 4px;
+            Cursor: pointer;
+        }
+
+        Button:hover {
+            Background-color: #0056b3;
+        }
+
+        /* Hidden Content Section */
+        #main-content {
+            Display: none; /* Initially Hidden */
+            Text-align: center;
+        }
+
+        .error {
+            Color: red;
+            Font-size: 0.8rem;
+            Margin-bottom: 10px;
+            Display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id=”login-container”>
+        <h2>Members Login</h2>
+        <p id=”error-msg” class=”error”>Invalid email or password!</p>
+        <input type=”email” id=”email” placeholder=”Email (admin@test.com)” required>
+        <input type=”password” id=”password” placeholder=”Password (12345)” required>
+        <button onclick=”checkLogin()”>Login</button>
+    </div>
+
+    <div id=”main-content”>
+        <h1>Welcome! 🎉</h1>
+        <p>You have successfully logged in to the secret area.</p>
+        <button onclick=”location.reload()” style=”background-color: #6c757d;”>Logout</button>
+    </div>
+
+    <script>
+        Function checkLogin() {
+            // Set your desired credentials here
+            Const correctEmail = admin@test.com;
+            Const correctPass = “12345”;
+
+            // Get user input
+            Const userEmail = document.getElementById(“email”).value;
+            Const userPass = document.getElementById(“password”).value;
+            Const errorMsg = document.getElementById(“error-msg”);
+
+            If (userEmail === correctEmail && userPass === correctPass) {
+                // Hide login and show content
+                Document.getElementById(“login-container”).style.display = “none”;
+                Document.getElementById(“main-content”).style.display = “block”;
+                Document.body.style.backgroundColor = “#e8f5e9”; // Change color to show success
+            } else {
+                // Show error message
+                errorMsg.style.display = “block”;
+            }
+        }
+    </script>
+</body>
+</html>
+
+

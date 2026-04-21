@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ECEL 12 Vault | Secure Digital Chest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- PDF.js for PDF preview (limited pages) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 30% 40%, #1a2a3a, #0a0f1a);
+            font-family: 'Space Grotesk', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .vault-world {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(8, 12, 24, 0.65);
+            backdrop-filter: blur(14px);
+            border-radius: 2.5rem;
+            border: 1px solid rgba(255, 180, 60, 0.5);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(255, 140, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .vault-header {
+            padding: 1.8rem 2rem;
+            background: #03070fcc;
+            border-bottom: 2px solid #ffaa33;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .title-section h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #ffcc66, #ff9933, #ff6600);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 5px #ff9900;
+        }
+
+        .title-section p {
+            color: #ffaa66;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .chest-status {
+            background: #000000aa;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            border-left: 3px solid #ffaa33;
+            font-size: 0.8rem;
+        }
+
+        .open-vault-section {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 3rem 2rem;
+            background: radial-gradient(circle at center, #0a0f1a80, #00000040);
+            flex-wrap: wrap;
+        }
+
+        .vault-action-btn {
+            background: linear-gradient(145deg, #ff8800, #cc5500);
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 80px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            font-family: inherit;
+            color: #fff3e0;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            box-shadow: 0 20px 35px rgba(255, 100, 0, 0.5), inset 0 1px 0 rgba(255,255,200,0.6);
+            transition: 0.2s;
+            letter-spacing: 2px;
+        }
+
+        .vault-action-btn.close-btn {
+            background: linear-gradient(145deg, #555, #333);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .vault-action-btn:hover {
+            transform: scale(1.02);
+            background: linear-gradient(145deg, #ffaa33, #ff7700);
+        }
+
+        .vault-action-btn.close-btn:hover {
+            background: linear-gradient(145deg, #dc2626, #991b1b);
+        }
+
+        .chest-animation-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 2rem;
+            transition: all 0.5s ease;
+        }
+
+        .chest-box {
+            background: #5a3e1a;
+            width: 220px;
+            height: 170px;
+            border-radius: 20px 20px 30px 30px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 15px 0 #2c1d0a;
+            transition: all 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chest-lid {
+            position: absolute;
+            top: -35px;
+            width: 100%;
+            height: 50px;
+            background: #b97f2e;
+            border-radius: 20px 20px 5px 5px;
+            transition: transform 0.5s ease;
+            transform-origin: bottom;
+            box-shadow: 0 5px 0 #6b4c1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+        }
+
+        .chest-box.closed .chest-lid {
+            transform: rotateX(0deg);
+        }
+
+        .chest-box.open .chest-lid {
+            transform: rotateX(120deg);
+        }
+
+        .chest-body {
+            background: #8b5e2c;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: #ffd966;
+            border-top: 4px solid #e6a017;
+        }
+
+        .vault-interior {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.8s ease-out, opacity 0.6s ease, margin 0.3s;
+            background: #03050fb3;
+            border-radius: 2rem;
+            margin: 0 1.5rem;
+        }
+
+        .vault-interior.open-vault {
+            max-height: 1500px;
+            opacity: 1;
+            margin: 1.5rem;
+            padding: 1rem 0 1.8rem 0;
+            transition: max-height 0.9s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.7s;
+        }
+
+        .file-category-panel {
+            background: #0a0f1ccc;
+            border-radius: 1.5rem;
+            margin: 1rem 1.2rem;
+            border: 1px solid #ffaa5540;
+            backdrop-filter: blur(8px);
+        }
+
+        .category-title {
+            padding: 0.8rem 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ffaa3340, transparent);
+            border-bottom: 1px solid #ffaa55;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #ffcc88;
+        }
+
+        .file-buttons-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1.2rem;
+        }
+
+        .action-file-btn {
+            background: #1e2a3a;
+            border: 1px solid #ffaa55;
+            padding: 0.7rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #ffdd99;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .action-file-btn:hover {
+            background: #ff8800;
+            color: #0a0f1a;
+            border-color: #ffcc88;
+            transform: translateY(-2px);
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 0.8rem;
+            padding: 0.5rem 1rem 1rem 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .file-card {
+            background: #0c1122;
+            border-radius: 1rem;
+            border-left: 5px solid #ffaa33;
+            padding: 0.8rem;
+            transition: 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .file-card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #ffddbb;
+            word-break: break-word;
+        }
+
+        .file-meta {
+            font-size: 0.6rem;
+            color: #ffaa77;
+        }
+
+        .file-actions-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .file-actions-group button {
+            background: none;
+            border: none;
+            color: #ffaa55;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0.3rem;
+            transition: 0.2s;
+        }
+
+        .file-actions-group button:hover {
+            color: #ffcc88;
+            transform: scale(1.1);
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 1.5rem;
+            color: #ffaa77;
+            font-style: italic;
+        }
+
+        .modal-preview {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-card {
+            background: #0e1625;
+            border-radius: 2rem;
+            max-width: 90vw;
+            max-height: 90vh;
+            border: 2px solid #ffaa33;
+            overflow: auto;
+            padding: 1rem;
+        }
+        .modal-close {
+            background: #ff6600;
+            border: none;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            color: white;
+            float: right;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+        }
+        .preview-content {
+            clear: both;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+        .download-full-btn {
+            background: #ffaa33;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            color: #0a0f1a;
+            cursor: pointer;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+        .preview-note {
+            font-size: 0.7rem;
+            color: #ffaa77;
+            margin-top: 0.5rem;
+        }
+        .video-timer {
+            font-size: 0.8rem;
+            color: #ffcc88;
+            margin: 0.5rem 0;
+        }
+        footer {
+            text-align: center;
+            padding: 1.2rem;
+            font-size: 0.7rem;
+            color: #ffaa66;
+            border-top: 1px solid #ffaa3340;
+        }
+        @media (max-width: 700px) {
+            .vault-action-btn { font-size: 1rem; padding: 0.8rem 1.2rem; }
+            .chest-box { width: 160px; height: 130px; }
+        }
+    </style>
+</head>
+<body>
+<div class="vault-world">
+    <div class="vault-header">
+        <div class="title-section">
+            <h1><i class="fas fa-crown"></i> ECEL 12 VAULT</h1>
+            <p>secure digital stronghold • documents & videos</p>
+        </div>
+        <div class="chest-status">
+            <i class="fas fa-lock"></i> VAULT LOCKED
+        </div>
+    </div>
+
+    <div class="open-vault-section">
+        <button id="openVaultMainBtn" class="vault-action-btn">
+            <i class="fas fa-box-open"></i> OPEN VAULT <i class="fas fa-key"></i>
+        </button>
+        <button id="closeVaultBtn" class="vault-action-btn close-btn">
+            <i class="fas fa-lock"></i> CLOSE VAULT
+        </button>
+    </div>
+
+    <div class="chest-animation-area">
+        <div id="chestContainer" class="chest-box closed">
+            <div class="chest-lid"><i class="fas fa-gem"></i></div>
+            <div class="chest-body">
+                <i class="fas fa-database"></i>
+            </div>
+        </div>
+    </div>
+
+    <div id="vaultInterior" class="vault-interior">
+        <div class="file-category-panel">
+            <div class="category-title"><i class="fas fa-file-word"></i> WORD DOCUMENTS</div>
+            <div class="file-buttons-row">
+                <button class="action-file-btn upload-word-btn"><i class="fas fa-upload"></i> Upload Word (.doc, .docx)</button>
+            </div>
+            <div id="wordFileList" class="resource-grid"></div>
+        </div>
+
+        <div class="file-category-panel">
+            <div class="category-title"><i class="fas fa-file-pdf"></i> PDF DOCUMENTS</div>
+            <div class="file-buttons-row">
+                <button class="action-file-btn upload-pdf-btn"><i class="fas fa-upload"></i> Upload PDF</button>
+            </div>
+            <div id="pdfFileList" class="resource-grid"></div>
+        </div>
+
+        <div class="file-category-panel">
+            <div class="category-title"><i class="fas fa-video"></i> VIDEO FILES</div>
+            <div class="file-buttons-row">
+                <button class="action-file-btn upload-video-btn"><i class="fas fa-upload"></i> Upload Video (mp4, webm, mov, avi)</button>
+            </div>
+            <div id="videoFileList" class="resource-grid"></div>
+        </div>
+        <footer>🔒 files stored locally • preview limited (PDF: 2-3 pages, Video: 10 secs) • click download for full access</footer>
+    </div>
+</div>
+
+<div id="previewModal" class="modal-preview">
+    <div class="modal-card">
+        <button class="modal-close" id="closePreviewBtn"><i class="fas fa-times-circle"></i> Close</button>
+        <div id="previewContainer" class="preview-content"></div>
+    </div>
+</div>
+
+<script>
+    // Configure PDF.js worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+    
+    // IndexedDB setup
+    const DB_NAME = 'ECEL12_Vault_DB';
+    const STORE_NAME = 'files';
+    let db = null;
+    let vaultOpened = false;
+
+    function openDatabase() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, 1);
+            request.onerror = () => reject(request.error);
+            request.onsuccess = () => { db = request.result; resolve(); };
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
+                if (!db.objectStoreNames.contains(STORE_NAME)) {
+                    db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+                }
+            };
+        });
+    }
+
+    async function saveFileToDB(fileObj) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.put(fileObj);
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    async function getAllFilesFromDB() {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.getAll();
+            request.onsuccess = () => resolve(request.result || []);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    async function deleteFileFromDB(id) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.delete(id);
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    function getFileCategory(fileName) {
+        const ext = fileName.split('.').pop().toLowerCase();
+        if (ext === 'pdf') return 'pdf';
+        if (ext === 'doc' || ext === 'docx') return 'word';
+        if (['mp4', 'webm', 'mov', 'avi', 'mkv'].includes(ext)) return 'video';
+        return 'other';
+    }
+
+    function formatSize(bytes) {
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+        return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    async function uploadFilesByType(targetType, acceptAttr) {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.multiple = true;
+        input.accept = acceptAttr;
+        input.onchange = async (e) => {
+            const files = Array.from(e.target.files);
+            const existingFiles = await getAllFilesFromDB();
+            for (let file of files) {
+                const category = getFileCategory(file.name);
+                if (category !== targetType) {
+                    alert(`❌ "${file.name}" is not a ${targetType.toUpperCase()} file.`);
+                    continue;
+                }
+                const exists = existingFiles.some(f => f.name.toLowerCase() === file.name.toLowerCase());
+                if (exists) { alert(`⚠️ "${file.name}" already exists.`); continue; }
+                const dataURL = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.readAsDataURL(file);
+                });
+                const fileObj = {
+                    id: Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                    name: file.name,
+                    type: category,
+                    dataURL: dataURL,
+                    size: file.size,
+                    date: new Date().toISOString()
+                };
+                await saveFileToDB(fileObj);
+            }
+            await renderAllCategoryLists();
+            updateChestStatus();
+        };
+        input.click();
+    }
+
+    async function deleteFile(id) {
+        if (confirm('Permanently delete this file from ECEL 12 VAULT?')) {
+            await deleteFileFromDB(id);
+            await renderAllCategoryLists();
+            updateChestStatus();
+        }
+    }
+
+    function downloadFullFile(fileObj) {
+        const link = document.createElement('a');
+        link.href = fileObj.dataURL;
+        link.download = fileObj.name;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // PDF preview (2-3 pages)
+    async function previewPDF(fileObj) {
+        const modal = document.getElementById('previewModal');
+        const container = document.getElementById('previewContainer');
+        container.innerHTML = '<div style="text-align:center; padding:1rem;"><i class="fas fa-spinner fa-pulse"></i> Loading preview...</div>';
+        modal.style.display = 'flex';
+        
+        try {
+            const pdfData = atob(fileObj.dataURL.split(',')[1]);
+            const typedArray = new Uint8Array(pdfData.length);
+            for (let i = 0; i < pdfData.length; i++) typedArray[i] = pdfData.charCodeAt(i);
+            
+            const pdf = await pdfjsLib.getDocument({ data: typedArray }).promise;
+            const numPages = Math.min(pdf.numPages, 3); // Max 3 pages preview
+            container.innerHTML = '';
+            
+            for (let i = 1; i <= numPages; i++) {
+                const page = await pdf.getPage(i);
+                const viewport = page.getViewport({ scale: 1.2 });
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                canvas.style.margin = '0 auto';
+                canvas.style.display = 'block';
+                canvas.style.border = '1px solid #ffaa33';
+                canvas.style.marginBottom = '1rem';
+                await page.render({ canvasContext: context, viewport: viewport }).promise;
+                container.appendChild(canvas);
+            }
+            
+            const note = document.createElement('p');
+            note.className = 'preview-note';
+            note.innerHTML = `<i class="fas fa-info-circle"></i> Preview limited to ${numPages} page${numPages !== 1 ? 's' : ''}. Download below for full document.`;
+            container.appendChild(note);
+            
+            const downloadBtn = document.createElement('button');
+            downloadBtn.className = 'download-full-btn';
+            downloadBtn.innerHTML = '<i class="fas fa-download"></i> DOWNLOAD FULL PDF';
+            downloadBtn.onclick = () => downloadFullFile(fileObj);
+            container.appendChild(downloadBtn);
+        } catch (err) {
+            container.innerHTML = `<div style="color:#ff6666;">Error loading PDF preview. <br> <button class="download-full-btn" style="margin-top:1rem;">Download File</button></div>`;
+            container.querySelector('.download-full-btn')?.addEventListener('click', () => downloadFullFile(fileObj));
+        }
+    }
+
+    // Word preview (limited)
+    async function previewWord(fileObj) {
+        const modal = document.getElementById('previewModal');
+        const container = document.getElementById('previewContainer');
+        container.innerHTML = `
+            <div style="text-align:center; padding:2rem;">
+                <i class="fas fa-file-word" style="font-size: 4rem; color: #ffaa33;"></i>
+                <p style="margin-top: 1rem;">📄 Word Document Preview (Limited)</p>
+                <p class="preview-note">Preview not available for Word files. Download to access full content.</p>
+                <button id="wordDownloadBtn" class="download-full-btn"><i class="fas fa-download"></i> DOWNLOAD FULL DOCUMENT</button>
+            </div>
+        `;
+        modal.style.display = 'flex';
+        document.getElementById('wordDownloadBtn')?.addEventListener('click', () => downloadFullFile(fileObj));
+    }
+
+    // Video preview limited to 10 seconds
+    function previewVideo(fileObj) {
+        const modal = document.getElementById('previewModal');
+        const container = document.getElementById('previewContainer');
+        container.innerHTML = `
+            <div style="text-align:center;">
+                <video id="previewVideo" controls style="max-width:100%; max-height:60vh; border-radius:1rem;">
+                    <source src="${fileObj.dataURL}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-timer"><i class="fas fa-hourglass-half"></i> Preview limited to 10 seconds</div>
+                <button id="fullDownloadVideoBtn" class="download-full-btn"><i class="fas fa-download"></i> DOWNLOAD FULL VIDEO</button>
+                <p class="preview-note">Full video available for download.</p>
+            </div>
+        `;
+        modal.style.display = 'flex';
+        
+        const video = document.getElementById('previewVideo');
+        if (video) {
+            video.currentTime = 0;
+            video.ontimeupdate = () => {
+                if (video.currentTime >= 10) {
+                    video.pause();
+                    alert('Preview limit: 10 seconds reached. Download the full video for complete playback.');
+                }
+            };
+        }
+        document.getElementById('fullDownloadVideoBtn')?.addEventListener('click', () => downloadFullFile(fileObj));
+    }
+
+    async function renderCategoryList(containerId, typeFilter) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        const allFiles = await getAllFilesFromDB();
+        const filtered = allFiles.filter(f => f.type === typeFilter);
+        if (filtered.length === 0) {
+            container.innerHTML = `<div class="empty-message"><i class="fas fa-inbox"></i> No ${typeFilter.toUpperCase()} files. Use upload button above.</div>`;
+            return;
+        }
+        container.innerHTML = filtered.map(file => `
+            <div class="file-card">
+                <div class="file-card-info">
+                    <span class="file-name" title="${escapeHtml(file.name)}">${escapeHtml(file.name.length > 45 ? file.name.slice(0, 42) + '...' : file.name)}</span>
+                    <span class="file-meta">${formatSize(file.size)} • ${new Date(file.date).toLocaleDateString()}</span>
+                </div>
+                <div class="file-actions-group">
+                    <button class="preview-file-btn" data-id="${file.id}" title="Preview"><i class="fas fa-eye"></i></button>
+                    <button class="download-file-btn" data-id="${file.id}" title="Download"><i class="fas fa-download"></i></button>
+                    <button class="delete-file-btn" data-id="${file.id}" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </div>
+        `).join('');
+        
+        container.querySelectorAll('.preview-file-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const id = btn.getAttribute('data-id');
+                const allFiles = await getAllFilesFromDB();
+                const file = allFiles.find(f => f.id === id);
+                if (file) {
+                    if (file.type === 'pdf') await previewPDF(file);
+                    else if (file.type === 'word') await previewWord(file);
+                    else if (file.type === 'video') previewVideo(file);
+                }
+            });
+        });
+        container.querySelectorAll('.download-file-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const id = btn.getAttribute('data-id');
+                const allFiles = await getAllFilesFromDB();
+                const file = allFiles.find(f => f.id === id);
+                if (file) downloadFullFile(file);
+            });
+        });
+        container.querySelectorAll('.delete-file-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const id = btn.getAttribute('data-id');
+                await deleteFile(id);
+            });
+        });
+    }
+    
+    async function renderAllCategoryLists() {
+        await renderCategoryList('wordFileList', 'word');
+        await renderCategoryList('pdfFileList', 'pdf');
+        await renderCategoryList('videoFileList', 'video');
+    }
+    
+    function escapeHtml(str) { return str?.replace(/[&<>]/g, (m) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])) || ''; }
+    
+    async function updateChestStatus() {
+        const allFiles = await getAllFilesFromDB();
+        const total = allFiles.length;
+        const statusDiv = document.querySelector('.chest-status');
+        if (statusDiv) statusDiv.innerHTML = total > 0 ? `<i class="fas fa-archive"></i> VAULT • ${total} ITEM${total !== 1 ? 'S' : ''} STORED` : `<i class="fas fa-lock"></i> VAULT READY`;
+    }
+    
+    // Open/Close Vault
+    const chestDiv = document.getElementById('chestContainer');
+    const vaultInterior = document.getElementById('vaultInterior');
+    const openBtn = document.getElementById('openVaultMainBtn');
+    const closeBtn = document.getElementById('closeVaultBtn');
+    
+    function openVault() {
+        if (vaultOpened) { vaultInterior.classList.add('open-vault'); chestDiv.classList.add('open'); return; }
+        chestDiv.classList.remove('closed');
+        chestDiv.classList.add('open');
+        setTimeout(() => {
+            vaultInterior.classList.add('open-vault');
+            vaultOpened = true;
+            openBtn.innerHTML = '<i class="fas fa-box-open"></i> VAULT OPEN <i class="fas fa-check"></i>';
+            document.querySelector('.chest-status').innerHTML = '<i class="fas fa-unlock-alt"></i> VAULT ACCESS GRANTED';
+        }, 500);
+    }
+    
+    function closeVault() {
+        vaultInterior.classList.remove('open-vault');
+        chestDiv.classList.remove('open');
+        chestDiv.classList.add('closed');
+        vaultOpened = false;
+        openBtn.innerHTML = '<i class="fas fa-box-open"></i> OPEN VAULT <i class="fas fa-key"></i>';
+        document.querySelector('.chest-status').innerHTML = '<i class="fas fa-lock"></i> VAULT LOCKED';
+    }
+    
+    openBtn.addEventListener('click', openVault);
+    closeBtn.addEventListener('click', closeVault);
+    chestDiv.addEventListener('click', openVault);
+    
+    // Upload buttons
+    document.querySelector('.upload-word-btn')?.addEventListener('click', () => uploadFilesByType('word', '.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'));
+    document.querySelector('.upload-pdf-btn')?.addEventListener('click', () => uploadFilesByType('pdf', '.pdf,application/pdf'));
+    document.querySelector('.upload-video-btn')?.addEventListener('click', () => uploadFilesByType('video', 'video/mp4,video/webm,video/quicktime,video/x-msvideo'));
+    
+    // Modal
+    const modal = document.getElementById('previewModal');
+    document.getElementById('closePreviewBtn')?.addEventListener('click', () => modal.style.display = 'none');
+    window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+    
+    async function init() {
+        await openDatabase();
+        await renderAllCategoryLists();
+        await updateChestStatus();
+        vaultInterior.classList.remove('open-vault');
+        chestDiv.classList.add('closed');
+        vaultOpened = false;
+    }
+    init();
+</script>
+</body>
+</html>

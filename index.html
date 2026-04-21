@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ECEL 12 GROUP4 ACTIVITY 4</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 5px;
+            font-size: 32px;
+        }
+
+        p {
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .profiles-row {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .profile-img-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-img-wrapper img {
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .profile-img-wrapper:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #00f2fe;
+        }
+
+        .profile-name {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 10px;
+            white-space: nowrap;
+            opacity: 0;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+            transition: opacity 0.3s;
+        }
+
+        .profile-img-wrapper:hover .profile-name {
+            opacity: 1;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        /* Music Button */
+        #music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #00f2fe;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        #music-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.7);
+        }
+
+        /* Play icon */
+        .play::before {
+            content: '';
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 12px solid #fff;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+        }
+
+        /* Pause icon */
+        .pause::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 16px;
+            background: #fff;
+        }
+        .pause::after {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 16px;
+            background: #fff;
+            margin-left: 4px;
+        }
+
+        /* Volume Slider */
+        #volume-slider {
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            width: 130px;
+            cursor: pointer;
+        }
+
+        /* Music Picker */
+        #music-picker {
+            position: fixed;
+            bottom: 110px;
+            right: 20px;
+            color: white;
+        }
+/* Animated glowing background */
+body::before {
+    content: '';
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0,242,254,0.15), transparent 60%);
+    animation: moveGlow 10s linear infinite;
+    z-index: -1;
+}
+
+@keyframes moveGlow {
+    0% { transform: translate(-25%, -25%); }
+    50% { transform: translate(-10%, -10%); }
+    100% { transform: translate(-25%, -25%); }
+}
+
+.profile-img-wrapper img {
+    border-radius: 20px;
+    border: 2px solid rgba(255,255,255,0.2);
+}
+
+
+h1 {
+    background: linear-gradient(90deg, #00f2fe, #4facfe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
+}
+body {
+    animation: fadeIn 1.2s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+.profile-img-wrapper:hover::before {
+    opacity: 1;
+}
+#theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #00f2fe;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    box-shadow: 0 0 15px rgba(0,242,254,0.5);
+}
+
+/* Light mode */
+.light-mode {
+    background: linear-gradient(135deg, #ffffff, #e0e0e0);
+}
+
+.light-mode h1 {
+    -webkit-text-fill-color: #333;
+}
+
+.light-mode p,
+.light-mode .footer {
+    color: #333;
+}
+@media (max-width: 768px) {
+    .profiles-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .profile-img-wrapper img {
+        width: 150px;
+        height: 150px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}
+#lines-bg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -3;
+}
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    padding: 3px;
+    background: linear-gradient(45deg, #00f2fe, #4facfe, #00f2fe);
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    z-index: -1;
+}
+
+    </style>
+</head>
+<body>
+    <canvas id="lines-bg"></canvas>
+<button id="theme-toggle">🌙</button>
+    <h1>Group 4</h1>
+    <p>Select a person</p>
+
+    <div class="profiles-row">
+        <a href="charlotte.html" target="_blank" class="profile-img-wrapper">
+            <img src="Screenshot_20260406-095755.png">
+            <span class="profile-name">CHARLOTTE MARIE GENOGALING</span>
+        </a>
+
+        <a href="guipo.html" target="_blank" class="profile-img-wrapper">
+            <img src="Screenshot_20260406-095823.png">
+            <span class="profile-name">ADRIAN GUIPO </span>
+        </a>
+
+        <a href="lacuesta.html" target="_blank" class="profile-img-wrapper">
+            <img src="1775441268317.jpeg">
+            <span class="profile-name">KARL DENMARK LACUESTA</span>
+        </a>
+
+        <a href="page4.html" target="_blank" class="profile-img-wrapper">
+            <img src="1775440318734.jpg">
+            <span class="profile-name">CLARISSE ALTHEA LAÑA</span>
+        </a>
+
+        <a href="Rolexindex.html" target="_blank" class="profile-img-wrapper">
+            <img src="Screenshot_20260406-095811.png">
+            <span class="profile-name">ROLAND FELIX MACAHILO</span>
+        </a>
+    </div>
+
+    <div class="footer">Activity 4</div>
+
+    <!-- Music -->
+    <audio id="bg-music" loop></audio>
+
+    <!-- Play/Pause Button -->
+    <button id="music-btn" class="play"></button>
+
+    <!-- Volume Slider -->
+    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.2">
+
+    <!-- Music Picker -->
+    <input type="file" id="music-picker" accept="audio/*">
+
+    <script>
+        const music = document.getElementById("bg-music");
+        const btn = document.getElementById("music-btn");
+        const volumeSlider = document.getElementById("volume-slider");
+        const musicPicker = document.getElementById("music-picker");
+
+        // Default volume
+        music.volume = volumeSlider.value;
+
+        // Play / Pause
+        btn.addEventListener("click", () => {
+            if (music.paused) {
+                music.play();
+                btn.classList.remove('play');
+                btn.classList.add('pause');
+            } else {
+                music.pause();
+                btn.classList.remove('pause');
+                btn.classList.add('play');
+            }
+        });
+
+        // Volume control
+        volumeSlider.addEventListener("input", () => {
+            music.volume = volumeSlider.value;
+        });
+
+        // Select music
+        musicPicker.addEventListener("change", function() {
+            const file = this.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                music.src = url;
+                music.play();
+
+                btn.classList.remove('play');
+                btn.classList.add('pause');
+            }
+        });
+
+        // Autoplay fix
+        document.addEventListener("click", () => {
+            if (music.paused && music.src) music.play();
+        }, { once: true });
+    </script>
+<script>
+document.querySelectorAll('.profile-img-wrapper').forEach(card => {
+    card.addEventListener('click', function(e) {
+        let ripple = document.createElement("span");
+        ripple.classList.add("ripple");
+
+        let rect = card.getBoundingClientRect();
+        ripple.style.left = (e.clientX - rect.left) + "px";
+        ripple.style.top = (e.clientY - rect.top) + "px";
+
+        this.appendChild(ripple);
+
+        setTimeout(() => ripple.remove(), 600);
+    });
+});
+
+const toggleBtn = document.getElementById("theme-toggle");
+
+toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("light-mode");
+
+    toggleBtn.textContent = 
+        document.body.classList.contains("light-mode") ? "🌙" : "☀️";
+});
+const title = document.querySelector("h1");
+const text = "Group 4";
+let i = 0;
+
+title.textContent = "";
+
+function typeEffect() {
+    if (i < text.length) {
+        title.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeEffect, 80);
+    }
+}
+
+typeEffect();
+const canvas2 = document.getElementById("lines-bg");
+const ctx2 = canvas2.getContext("2d");
+
+canvas2.width = window.innerWidth;
+canvas2.height = window.innerHeight;
+
+let lines = [];
+
+for (let i = 0; i < 30; i++) {
+    lines.push({
+        x: Math.random() * canvas2.width,
+        y: Math.random() * canvas2.height,
+        dx: (Math.random() - 0.5) * 2,
+        dy: (Math.random() - 0.5) * 2
+    });
+}
+
+function drawLines() {
+    ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+    ctx2.strokeStyle = "rgba(0,242,254,0.3)";
+
+    lines.forEach(l => {
+        ctx2.beginPath();
+        ctx2.moveTo(l.x, l.y);
+        ctx2.lineTo(l.x + 20, l.y + 20);
+        ctx2.stroke();
+
+        l.x += l.dx;
+        l.y += l.dy;
+    });
+
+    requestAnimationFrame(drawLines);
+}
+
+drawLines();
+</script>
+</body>
+</html>
