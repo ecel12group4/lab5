@@ -442,6 +442,20 @@
     max-height: 90%;
     object-fit: contain;
 }
+/* Add this to your <style> section */
+.section-header {
+    grid-column: 1 / -1; /* This makes it span the full width of the grid */
+    text-align: center;
+    padding: 40px 0 20px; /* Adds space above and below the title */
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    background: linear-gradient(45deg, #fff, #00f7ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
 
 </style>
 </head>
@@ -597,7 +611,91 @@
         <img src="2 (2).jpg">
          <p>gwapo gwapo ba</p>
     </div>
+    <div class="section-header">
+    <h2>11 STEM - B</h2>
+</div>
 
+    <div class="media-box" onclick="openLightbox('image', '5  (1).jpeg')">
+        <img src="5  (1).jpeg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '5  (2).jpeg')">
+        <img src="5  (2).jpeg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '5  (3).jpeg')">
+        <img src="5  (3).jpeg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '5  (4).jpeg')">
+        <img src="5  (4).jpeg">
+         <p></p>
+    </div>
+  
+    
+    
+    <div class="media-box" onclick="openLightbox('image', '5  (8).jpeg')">
+        <img src="5  (8).jpeg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '5  (9).jpeg')">
+        <img src="5  (9).jpeg">
+         <p></p>
+    </div>
+    
+    <div class="media-box" onclick="openLightbox('image', '5  (11).jpeg')">
+        <img src="5  (11).jpeg">
+         <p></p>
+    </div>
+    
+    
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '5  (14).jpeg')">
+        <img src="5  (14).jpeg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '5  (15).jpeg')">
+        <img src="5  (15).jpeg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '5  (16).jpeg')">
+        <img src="5  (16).jpeg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '5  (17).jpeg')">
+        <img src="5  (17).jpeg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '5  (18).jpeg')">
+        <img src="5  (18).jpeg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '5  (19).jpeg')">
+        <img src="5  (19).jpeg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '5  (6).jpeg')">
+        <img src="5  (6).jpeg">
+         <p></p>
+    </div>
+    <div class="media-box" onclick="openLightbox('image', '5  (12).jpeg')">
+        <img src="5  (12).jpeg">
+         <p></p>
+    </div>
+    
+    <div class="media-box" onclick="openLightbox('image', '5  (10).jpeg')">
+        <img src="5  (10).jpeg">
+         <p></p>
+    </div>
+
+    <div class="media-box" onclick="openLightbox('image', '5  (13).jpeg')">
+        <img src="5  (13).jpeg">
+         <p></p>
+         </div>
+     <div class="media-box" onclick="openLightbox('image', '5  (7).jpeg')">
+        <img src="5  (7).jpeg">
+         <p></p>
+    </div>
 </section>
 
 <!-- Videos -->
@@ -617,34 +715,47 @@
             sin o tana na, wala ko kakilala
         </p>
     </div>
-    <div class="media-box" onclick="openLightbox('youtube', '_dRpW0GCN3k')">
-    <img src="https://img.youtube.com/vi/_dRpW0GCN3k/hqdefault.jpg" style="width:100%; height:85%; object-fit: cover; border-radius: 20px;">
-    <p>Zombie Dance</p>
-</div>
+    <div class="media-box" onclick="openLightbox('video', 'VID_20260314_230340.mp4')">
+        <video>
+            <source src="VID_20260314_230340.mp4" type="video/mp4">
+        </video>
+        <p>
+            Nong Boyboy walking dead dance
+        </p>
+    </div>
     <div class="media-box" onclick="openLightbox('video', 'Messenger_creation_ABCD5E56-E22A-4200-AB49-015149332B68.mp4')">
         <video>
             <source src="Messenger_creation_ABCD5E56-E22A-4200-AB49-015149332B68.mp4" type="video/mp4">
         </video>
         <p>
-            Tawag ng Kitchenette Duet
+            Tawag ng Kichenette Duet
         </p>
     </div>
-    <div class="media-box" onclick="openLightbox('youtube', 'L4BfDVJz9hE')">
-    <img src="https://img.youtube.com/vi/L4BfDVJz9hE/hqdefault.jpg" style="width:100%; height:85%; object-fit: cover; border-radius: 20px;">
-    <p>Quando, Quando, Quando Jammyboy Version</p>
+    <div class="media-box" onclick="openLightbox('video', 'Messenger_creation_F53E4DA1-4546-4C6B-B63A-450FB13FE721.mp4')">
+        <video>
+            <source src="Messenger_creation_F53E4DA1-4546-4C6B-B63A-450FB13FE721.mp4" type="video/mp4">
+        </video>
+        <p>
+            Quando, Quando, Quando Jammyboy Version
+        </p>
     </div>
-            
-   <div class="media-box" onclick="openLightbox('youtube', 'ok8Z3FFaV60', '12152002')">
-    <img src="https://img.youtube.com/vi/ok8Z3FFaV60/hqdefault.jpg" style="width:100%; height:85%; object-fit: cover; border-radius: 20px;">
-    <p>Classmate Please Stand...Are you ready to pray?</p>
-</div>
-        
-    <div class="media-box" onclick="openLightbox('youtube', 'CAeZQ4vZDAk',  '12152002')">
-    <img src="https://img.youtube.com/vi/CAeZQ4vZDAk/hqdefault.jpg" style="width:100%; height:85%; object-fit: cover; border-radius: 20px;">
-    <p>The Dance Floor is Now Open</p>
-</div>
-        
+    <div class="media-box" onclick="openLightbox('video', 'received_1340455370424675.mp4','12152002')">
+        <video>
+            <source src="received_1340455370424675.mp4" type="video/mp4">
+        </video>
+        <p>
+            Classmate pleasa stand.. Are you ready to pray?
+        </p>
+    </div>
     
+    <div class="media-box" onclick="openLightbox('video', 'received_1385922039453566.mp4','12152002')">
+        <video>
+            <source src="received_1385922039453566.mp4" type="video/mp4">
+        </video>
+        <p>
+            The Dance Floor is Now Open
+        </p>
+    </div>
     <div class="media-box" onclick="openLightbox('video', 'received_1149773240067994.mp4','12152002')">
         <video>
             <source src="received_1149773240067994.mp4" type="video/mp4">
@@ -661,14 +772,14 @@
             Igo pa, kinse edad na, kinse kilo na
         </p>
     </div>
-    
-   <div class="media-box" onclick="openLightbox('youtube', '66Fa1Sj4Ym0')">
-    <img src="https://img.youtube.com/vi/66Fa1Sj4Ym0/hqdefault.jpg" style="width:100%; height:85%; object-fit: cover; border-radius: 20px;">
-    <p>Ocean Star Disco Mobile (Dumangas) vs GM Disco Moblie (Lambunao) Round the Clock Battle
+    <div class="media-box" onclick="openLightbox('video', 'vid2.mp4',)">
+        <video>
+            <source src="vid2.mp4" type="video/mp4">
+        </video>
+        <p> 
+            Ocean Star Disco Mobile (Dumangas) vs GM Disco Moblie (Lambunao) Round the Clock Battle
         </p>
-       
-    </p>
-   </div>
+    </div>
 </section>
 
 <footer>
@@ -715,14 +826,13 @@
     </div>
 </div>
 <script>
-   function closePasswordBox() {
+    function closePasswordBox() {
     document.getElementById("password-box").style.display = "none";
     document.getElementById("custom-password").value = "";
     document.getElementById("pw-error").innerText = "";
     currentPassword = null;
     currentMedia = {};
 }
-
 function showSection(id) {
     document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -732,15 +842,17 @@ let currentMedia = {};
 let currentPassword = null;
 
 function openLightbox(type, src, password = null) {
-    if (password !== null && password !== undefined && password !== "") {
+
+    if (password !== null) {
         currentMedia = { type, src };
         currentPassword = password;
+
         document.getElementById("password-box").style.display = "flex";
         return;
     }
+
     showMedia(type, src);
 }
-
 function submitPassword() {
     const input = document.getElementById("custom-password").value;
     const box = document.querySelector(".password-card");
@@ -749,6 +861,7 @@ function submitPassword() {
         document.getElementById("password-box").style.display = "none";
         document.getElementById("custom-password").value = "";
         document.getElementById("pw-error").innerText = "";
+
         showMedia(currentMedia.type, currentMedia.src);
     } else {
         document.getElementById("pw-error").innerText = "Wrong password!";
@@ -761,77 +874,38 @@ function showMedia(type, src) {
     const lightbox = document.getElementById('lightbox');
     const img = document.getElementById('lightbox-img');
     const video = document.getElementById('lightbox-video');
-    
-    // Remove any existing iframe container
-    const existingIframeContainer = document.getElementById('lightbox-iframe-container');
-    if (existingIframeContainer) {
-        existingIframeContainer.remove();
-    }
-    
-    // Hide all elements first
-    img.style.display = 'none';
-    video.style.display = 'none';
-    video.pause();
-    
-    if (type === 'image') {
+
+    if(type === 'image') {
         img.src = src;
         img.style.display = 'block';
-    } 
-    else if (type === 'video') {
+        video.style.display = 'none';
+        video.pause();
+    } else {
         video.src = src;
         video.style.display = 'block';
-        
+        img.style.display = 'none';
+
         // RESET rotation first
         video.classList.remove("rotate-video");
-        
+
         // APPLY rotation ONLY to specific video
         if (src === "vid1.mp4") {
             video.classList.add("rotate-video");
         }
-        
+
         video.play();
     }
-    else if (type === 'youtube') {
-        // Create iframe container
-        const container = document.createElement('div');
-        container.id = 'lightbox-iframe-container';
-        container.style.display = 'block';
-        container.style.width = '90%';
-        container.style.height = '80%';
-        container.style.position = 'relative';
-        
-        // Create and add iframe
-        const iframe = document.createElement('iframe');
-        iframe.width = '100%';
-        iframe.height = '100%';
-        iframe.src = 'https://www.youtube.com/embed/' + src + '?autoplay=1';
-        iframe.frameBorder = '0';
-        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-        iframe.allowFullscreen = true;
-        
-        container.appendChild(iframe);
-        lightbox.appendChild(container);
-    }
-    
+
     lightbox.style.display = 'flex';
 }
 
 function closeLightbox() {
     const lightbox = document.getElementById('lightbox');
     const video = document.getElementById('lightbox-video');
-    const iframeContainer = document.getElementById('lightbox-iframe-container');
-    
     video.pause();
-    
-    // Remove iframe container to stop YouTube video
-    if (iframeContainer) {
-        iframeContainer.remove();
-    }
-    
     lightbox.style.display = 'none';
 }
 
-// Typing effect
 const text = "Captured moments. Real memories. Forever yours.";
 let i = 0;
 
@@ -846,41 +920,33 @@ function typeEffect() {
 window.onload = typeEffect;
 
 // Show/Hide password
-const toggleBtn = document.getElementById("togglePassword");
-if (toggleBtn) {
-    toggleBtn.onclick = function () {
-        const input = document.getElementById("custom-password");
-        if (input.type === "password") {
-            input.type = "text";
-            this.classList.remove("fa-eye");
-            this.classList.add("fa-eye-slash");
-        } else {
-            input.type = "password";
-            this.classList.remove("fa-eye-slash");
-            this.classList.add("fa-eye");
-        }
-    };
-}
+document.getElementById("togglePassword").onclick = function () {
+    const input = document.getElementById("custom-password");
+    if (input.type === "password") {
+        input.type = "text";
+        this.classList.remove("fa-eye");
+        this.classList.add("fa-eye-slash");
+    } else {
+        input.type = "password";
+        this.classList.remove("fa-eye-slash");
+        this.classList.add("fa-eye");
+    }
+};
 
 // Press ENTER to submit
-const passwordInput = document.getElementById("custom-password");
-if (passwordInput) {
-    passwordInput.addEventListener("keypress", function(e) {
-        if (e.key === "Enter") {
-            submitPassword();
-        }
-    });
-}
+document.getElementById("custom-password").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+        submitPassword();
+    }
+});
 
 // Add mini particles
 const mini = document.querySelector(".mini-particles");
-if (mini) {
-    for (let i = 0; i < 15; i++) {
-        let span = document.createElement("span");
-        span.style.left = Math.random() * 100 + "%";
-        span.style.animationDuration = (3 + Math.random() * 3) + "s";
-        mini.appendChild(span);
-    }
+for (let i = 0; i < 15; i++) {
+    let span = document.createElement("span");
+    span.style.left = Math.random() * 100 + "%";
+    span.style.animationDuration = (3 + Math.random() * 3) + "s";
+    mini.appendChild(span);
 }
 </script>
 
