@@ -250,36 +250,68 @@ body::after {
     z-index: -1;
 }
 
+/* Back Button Styling */
+#back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #00f2fe;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    color: #00f2fe;
+    font-size: 16px;
+    font-weight: 500;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    z-index: 100; /* Ensure it stays above the canvas */
+}
+
+#back-btn:hover {
+    background: #00f2fe;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
+    transform: translateX(-5px);
+}
+
+/* Adjust for Light Mode */
+.light-mode #back-btn {
+    background: #f0f0f0;
+    color: #333;
+    border-color: #333;
+}
     </style>
 </head>
 <body>
+    
     <canvas id="lines-bg"></canvas>
 <button id="theme-toggle">🌙</button>
     <h1>Group 4</h1>
     <p>Select a person</p>
 
     <div class="profiles-row">
-        <a href="charlotte.html" target="_blank" class="profile-img-wrapper">
-            <img src="Screenshot_20260406-095755.png">
-            <span class="profile-name">CHARLOTTE MARIE GENOGALING</span>
-        </a>
+        <a href="charlotte.html" class="profile-img-wrapper">
+    <img src="Screenshot_20260406-095755.png">
+    <span class="profile-name">CHARLOTTE MARIE GENOGALING</span>
+</a>
 
-        <a href="guipo.html" target="_blank" class="profile-img-wrapper">
+        <a href="guipo.html" class="profile-img-wrapper">
             <img src="Screenshot_20260406-095823.png">
             <span class="profile-name">ADRIAN GUIPO </span>
         </a>
 
-        <a href="lacuesta.html" target="_blank" class="profile-img-wrapper">
+        <a href="lacuesta.html" class="profile-img-wrapper">
             <img src="1775441268317.jpeg">
             <span class="profile-name">KARL DENMARK LACUESTA</span>
         </a>
 
-        <a href="Lana.html" target="_blank" class="profile-img-wrapper">
+        <a href="Lana.html"  class="profile-img-wrapper">
             <img src="1775440318734.jpg">
             <span class="profile-name">CLARISSE ALTHEA LAÑA</span>
         </a>
 
-        <a href="Rolexindex.html" target="_blank" class="profile-img-wrapper">
+        <a href="Rolexindex.html" class="profile-img-wrapper">
             <img src="Screenshot_20260406-095811.png">
             <span class="profile-name">ROLAND FELIX MACAHILO</span>
         </a>
@@ -418,6 +450,14 @@ function drawLines() {
 }
 
 drawLines();
+function goBack() {
+    // If there is a history, go back. Otherwise, go to a default page.
+    if (document.referrer !== "") {
+        window.history.back();
+    } else {
+        window.location.href = "index.html"; // Replace with your main landing page
+    }
+}
 </script>
 </body>
 </html>
