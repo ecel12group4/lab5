@@ -923,28 +923,51 @@ function showMedia(type, src) {
     const lightbox = document.getElementById('lightbox');
     const img = document.getElementById('lightbox-img');
     const video = document.getElementById('lightbox-video');
-
-    if(type === 'image') {
+    
+    // Remove existing iframe container if any
+    const existingIframe = document.getElementById('lightbox-iframe-container');
+    if (existingIframe) {
+        existingIframe.remove();
+    }
+    
+    // Hide all
+    img.style.display = 'none';
+    video.style.display = 'none';
+    video.pause();
+    
+    if (type === 'image') {
         img.src = src;
         img.style.display = 'block';
-        video.style.display = 'none';
-        video.pause();
-    } else {
+    } 
+    else if (type === 'video') {
         video.src = src;
         video.style.display = 'block';
-        img.style.display = 'none';
-
-        // RESET rotation first
         video.classList.remove("rotate-video");
-
-        // APPLY rotation ONLY to specific video
         if (src === "vid1.mp4") {
             video.classList.add("rotate-video");
         }
-
         video.play();
     }
-
+    else if (type === 'youtube') {
+        // Create container for iframe
+        const container = document.createElement('div');
+        container.id = 'lightbox-iframe-container';
+        container.style.width = '90%';
+        container.style.height = '80%';
+        container.style.position = 'relative';
+        
+        const iframe = document.createElement('iframe');
+        iframe.width = '100%';
+        iframe.height = '100%';
+        iframe.src = 'https://www.youtube.com/embed/' + src + '?autoplay=1';
+        iframe.frameBorder = '0';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        
+        container.appendChild(iframe);
+        lightbox.appendChild(container);
+    }
+    
     lightbox.style.display = 'flex';
 }
 
