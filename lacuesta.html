@@ -871,13 +871,15 @@
     </div>
 </div>
 <script>
-    function closePasswordBox() {
+   
+function closePasswordBox() {
     document.getElementById("password-box").style.display = "none";
     document.getElementById("custom-password").value = "";
     document.getElementById("pw-error").innerText = "";
     currentPassword = null;
     currentMedia = {};
 }
+
 function showSection(id) {
     document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -887,17 +889,15 @@ let currentMedia = {};
 let currentPassword = null;
 
 function openLightbox(type, src, password = null) {
-
-    if (password !== null) {
+    if (password !== null && password !== undefined && password !== "") {
         currentMedia = { type, src };
         currentPassword = password;
-
         document.getElementById("password-box").style.display = "flex";
         return;
     }
-
     showMedia(type, src);
 }
+
 function submitPassword() {
     const input = document.getElementById("custom-password").value;
     const box = document.querySelector(".password-card");
@@ -906,7 +906,6 @@ function submitPassword() {
         document.getElementById("password-box").style.display = "none";
         document.getElementById("custom-password").value = "";
         document.getElementById("pw-error").innerText = "";
-
         showMedia(currentMedia.type, currentMedia.src);
     } else {
         document.getElementById("pw-error").innerText = "Wrong password!";
@@ -920,13 +919,13 @@ function showMedia(type, src) {
     const img = document.getElementById('lightbox-img');
     const video = document.getElementById('lightbox-video');
     
-    // Remove existing iframe container if any
-    const existingIframe = document.getElementById('lightbox-iframe-container');
-    if (existingIframe) {
-        existingIframe.remove();
+    // Remove any existing iframe container
+    const existingIframeContainer = document.getElementById('lightbox-iframe-container');
+    if (existingIframeContainer) {
+        existingIframeContainer.remove();
     }
     
-    // Hide all
+    // Hide all elements first
     img.style.display = 'none';
     video.style.display = 'none';
     video.pause();
@@ -938,20 +937,27 @@ function showMedia(type, src) {
     else if (type === 'video') {
         video.src = src;
         video.style.display = 'block';
+        
+        // RESET rotation first
         video.classList.remove("rotate-video");
+        
+        // APPLY rotation ONLY to specific video
         if (src === "vid1.mp4") {
             video.classList.add("rotate-video");
         }
+        
         video.play();
     }
     else if (type === 'youtube') {
-        // Create container for iframe
+        // Create iframe container
         const container = document.createElement('div');
         container.id = 'lightbox-iframe-container';
+        container.style.display = 'block';
         container.style.width = '90%';
         container.style.height = '80%';
         container.style.position = 'relative';
         
+        // Create and add iframe
         const iframe = document.createElement('iframe');
         iframe.width = '100%';
         iframe.height = '100%';
@@ -970,10 +976,19 @@ function showMedia(type, src) {
 function closeLightbox() {
     const lightbox = document.getElementById('lightbox');
     const video = document.getElementById('lightbox-video');
+    const iframeContainer = document.getElementById('lightbox-iframe-container');
+    
     video.pause();
+    
+    // Remove iframe container to stop YouTube video
+    if (iframeContainer) {
+        iframeContainer.remove();
+    }
+    
     lightbox.style.display = 'none';
 }
 
+// Typing effect
 const text = "Captured moments. Real memories. Forever yours.";
 let i = 0;
 
@@ -988,33 +1003,41 @@ function typeEffect() {
 window.onload = typeEffect;
 
 // Show/Hide password
-document.getElementById("togglePassword").onclick = function () {
-    const input = document.getElementById("custom-password");
-    if (input.type === "password") {
-        input.type = "text";
-        this.classList.remove("fa-eye");
-        this.classList.add("fa-eye-slash");
-    } else {
-        input.type = "password";
-        this.classList.remove("fa-eye-slash");
-        this.classList.add("fa-eye");
-    }
-};
+const toggleBtn = document.getElementById("togglePassword");
+if (toggleBtn) {
+    toggleBtn.onclick = function () {
+        const input = document.getElementById("custom-password");
+        if (input.type === "password") {
+            input.type = "text";
+            this.classList.remove("fa-eye");
+            this.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";
+            this.classList.remove("fa-eye-slash");
+            this.classList.add("fa-eye");
+        }
+    };
+}
 
 // Press ENTER to submit
-document.getElementById("custom-password").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-        submitPassword();
-    }
-});
+const passwordInput = document.getElementById("custom-password");
+if (passwordInput) {
+    passwordInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+            submitPassword();
+        }
+    });
+}
 
 // Add mini particles
 const mini = document.querySelector(".mini-particles");
-for (let i = 0; i < 15; i++) {
-    let span = document.createElement("span");
-    span.style.left = Math.random() * 100 + "%";
-    span.style.animationDuration = (3 + Math.random() * 3) + "s";
-    mini.appendChild(span);
+if (mini) {
+    for (let i = 0; i < 15; i++) {
+        let span = document.createElement("span");
+        span.style.left = Math.random() * 100 + "%";
+        span.style.animationDuration = (3 + Math.random() * 3) + "s";
+        mini.appendChild(span);
+    }
 }
 </script>
 
